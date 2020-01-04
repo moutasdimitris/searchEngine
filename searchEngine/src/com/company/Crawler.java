@@ -12,45 +12,47 @@ import java.util.HashSet;
 import java.util.concurrent.*;
 
 
-class crawler {
-    private HashSet<String> links=new HashSet<>();
-    private HashSet<String> hashSet=new HashSet<>();
+class Crawler {
+    private HashSet<String> links = new HashSet<>();
+    private HashSet<String> hashSet = new HashSet<>();
     private int i;
 
-    crawler()  {
+    Crawler() {
     }
 
 
     //cr_num einai to plithos ton selidon pou thelume na kanoume crawling
-    void get_Links(String URL, int cr_num, int thread_num, int keep_data) throws Exception{
+    void get_Links(String URL, int cr_num, int thread_num, boolean keep_data) throws Exception {
         //Creating threads
-        i=cr_num;
-        ExecutorService executor= Executors.newFixedThreadPool(thread_num);
-        if (keep_data==0){
+        i = cr_num;
+        ExecutorService executor = Executors.newFixedThreadPool(thread_num);
+        if (!keep_data) {
             links.clear();
             parse(URL, executor);
-        }else{
+        } else {
             parse(URL, executor);
-        }}
+        }
+    }
 
     private void parse(String URL, ExecutorService executor) throws ExecutionException, IOException {
-        try{
-            parsing_URL(URL,executor);
-            for (String x:links) {
+        try {
+            parsing_URL(URL, executor);
+            for (String x : links) {
                 Future<HashSet<String>> sumResult = executor.submit(new Multithreading(x));
                 for (String d : sumResult.get()) {
-                    if (i >= 0) {
+                    if (i > 0) {
                         hashSet.add(d);
                         i--;
-                    }else{
+                    } else {
                         executor.shutdown();
                     }
                 }
-            }}catch (InterruptedException | RejectedExecutionException e){
-            System.out.println("Task exception: "+e.getMessage());
+            }
+        } catch (InterruptedException | RejectedExecutionException e) {
+            System.out.println("Task exception: " + e.getMessage());
         }
         executor.shutdown();
-        while(!executor.isTerminated()) {
+        while (!executor.isTerminated()) {
         }
     }
 
@@ -61,15 +63,15 @@ class crawler {
             Elements linksOnPage = document.select("a[href]");
             for (Element link : linksOnPage) {
                 links.add(link.attr("abs:href"));
-                if (i >= 0) {
+                if (i > 0) {
                     hashSet.add(link.attr("abs:href"));
                     i--;
-                }else{
+                } else {
                     executor.shutdown();
                 }
             }
         } catch (IOException | RejectedExecutionException e) {
-            System.out.println("Task exception: " +e.getMessage());
+            System.out.println("Task exception: " + e.getMessage());
         }
     }
 

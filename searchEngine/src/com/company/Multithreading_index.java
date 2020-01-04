@@ -11,6 +11,31 @@ import java.util.concurrent.RejectedExecutionException;
 class TFD{
     String text,doc_id;
     Integer freq;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getDoc_id() {
+        return doc_id;
+    }
+
+    public void setDoc_id(String doc_id) {
+        this.doc_id = doc_id;
+    }
+
+    public Integer getFreq() {
+        return freq;
+    }
+
+    public void setFreq(Integer freq) {
+        this.freq = freq;
+    }
+
 }
 
 public class Multithreading_index implements Callable<HashSet<TFD>> {
