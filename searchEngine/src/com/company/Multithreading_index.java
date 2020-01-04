@@ -53,11 +53,13 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
             Document  document = Jsoup.connect(URL).get();
             String[] v = Jsoup.clean(document.html(), Whitelist.none()).split(" ",0);
             for (String s : v) {
-                TFD tfd = new TFD();
-                tfd.doc_id = URL;
-                tfd.freq = 1;
-                tfd.text = s;
-                sc.add(tfd);
+                if (!s.isEmpty()) {
+                    TFD tfd = new TFD();
+                    tfd.doc_id = URL;
+                    tfd.freq = 1;
+                    tfd.text = s;
+                    sc.add(tfd);
+                }
             }
         } catch (IOException | RejectedExecutionException e) {
             System.out.println("Something went wrong: "+e.getMessage());
