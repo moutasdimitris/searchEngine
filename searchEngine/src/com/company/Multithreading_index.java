@@ -58,7 +58,7 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
                         TFD tfd = new TFD();
                         tfd.doc_id = URL;
                         tfd.freq = 1;
-                        tfd.text = s;
+                        tfd.text = s.toLowerCase();
                         sc.add(tfd);
                 }else{
                         if (s.endsWith(".")){
@@ -66,35 +66,35 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = text;
+                            tfd.text = text.toLowerCase();
                             sc.add(tfd);}
                         if  (s.endsWith(",")) {
                             String text=clean_more(s,",");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = text;
+                            tfd.text = text.toLowerCase();
                             sc.add(tfd); }
                         if  (s.endsWith(";")) {
                             String text=clean_more(s,";");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = text;
+                            tfd.text = text.toLowerCase();
                             sc.add(tfd);}
                         if  (s.endsWith("'")){
                             String text=clean_more(s,"'");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = text;
+                            tfd.text = text.toLowerCase();
                             sc.add(tfd);}
                         if  (s.endsWith(":")){
                             String text=clean_more(s,":");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = text;
+                            tfd.text = text.toLowerCase();
                             sc.add(tfd);}
                 }}
             }
