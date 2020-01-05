@@ -54,16 +54,60 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
             String[] v = Jsoup.clean(document.html(), Whitelist.none()).split(" ",0);
             for (String s : v) {
                 if (!s.isEmpty()) {
-                    TFD tfd = new TFD();
-                    tfd.doc_id = URL;
-                    tfd.freq = 1;
-                    tfd.text = s;
-                    sc.add(tfd);
-                }
+                    if (!(s.endsWith(".") && s.endsWith(",") && s.endsWith(";")  && s.endsWith("'") && s.endsWith(":"))){
+                        TFD tfd = new TFD();
+                        tfd.doc_id = URL;
+                        tfd.freq = 1;
+                        tfd.text = s;
+                        sc.add(tfd);
+                }else{
+                        if (s.endsWith(".")){
+                            String text=clean_more(s,".");
+                            TFD tfd = new TFD();
+                            tfd.doc_id = URL;
+                            tfd.freq = 1;
+                            tfd.text = text;
+                            sc.add(tfd);}
+                        if  (s.endsWith(",")) {
+                            String text=clean_more(s,",");
+                            TFD tfd = new TFD();
+                            tfd.doc_id = URL;
+                            tfd.freq = 1;
+                            tfd.text = text;
+                            sc.add(tfd); }
+                        if  (s.endsWith(";")) {
+                            String text=clean_more(s,";");
+                            TFD tfd = new TFD();
+                            tfd.doc_id = URL;
+                            tfd.freq = 1;
+                            tfd.text = text;
+                            sc.add(tfd);}
+                        if  (s.endsWith("'")){
+                            String text=clean_more(s,"'");
+                            TFD tfd = new TFD();
+                            tfd.doc_id = URL;
+                            tfd.freq = 1;
+                            tfd.text = text;
+                            sc.add(tfd);}
+                        if  (s.endsWith(":")){
+                            String text=clean_more(s,":");
+                            TFD tfd = new TFD();
+                            tfd.doc_id = URL;
+                            tfd.freq = 1;
+                            tfd.text = text;
+                            sc.add(tfd);}
+                }}
             }
         } catch (IOException | RejectedExecutionException e) {
             System.out.println("Something went wrong: "+e.getMessage());
         }
         return sc;
+    }
+
+    private String clean_more(String text,String symbol){
+        String s="";
+            if (text.endsWith(symbol))
+                s=text.replace(symbol,"");
+        return s;
     }
 }

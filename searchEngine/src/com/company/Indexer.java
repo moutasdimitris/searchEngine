@@ -23,7 +23,7 @@ class Indexer {
         executor.shutdown();
         for (HashSet<TFD> s : hash) {
             for (TFD tfd : s) {
-                System.out.println(tfd.getText());
+                System.out.println("("+tfd.getText()+", "+tfd.getDoc_id()+", "+tfd.getFreq()+")");
             }
         }
     }
