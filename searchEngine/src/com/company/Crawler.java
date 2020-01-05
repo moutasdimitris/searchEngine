@@ -48,7 +48,7 @@ class Crawler {
                     }
                 }
             }
-        } catch (InterruptedException | RejectedExecutionException e) {
+        } catch (InterruptedException | RejectedExecutionException | IllegalArgumentException e) {
             System.out.println("Task exception: " + e.getMessage());
         }
         executor.shutdown();

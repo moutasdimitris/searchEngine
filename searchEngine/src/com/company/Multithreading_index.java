@@ -14,27 +14,27 @@ class TFD{
     String text,doc_id;
     Integer freq;
 
-    public String getText() {
+    String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    void setText(String text) {
         this.text = text;
     }
 
-    public String getDoc_id() {
+    String getDoc_id() {
         return doc_id;
     }
 
-    public void setDoc_id(String doc_id) {
+    void setDoc_id(String doc_id) {
         this.doc_id = doc_id;
     }
 
-    public Integer getFreq() {
+    Integer getFreq() {
         return freq;
     }
 
-    public void setFreq(Integer freq) {
+    void setFreq(Integer freq) {
         this.freq = freq;
     }
 
@@ -50,7 +50,7 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
     }
 
     @Override
-    public HashSet<TFD> call() {
+    public HashSet<TFD> call()  {
         try {
             Document  document = Jsoup.connect(URL).get();
             String v1 = Jsoup.clean(document.html(), Whitelist.none()).toLowerCase();
@@ -110,7 +110,7 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
                         }
                     }
             }
-        } catch (IOException | RejectedExecutionException e) {
+        } catch (IOException | RejectedExecutionException | IllegalArgumentException e) {
             System.out.println("Something went wrong: "+e.getMessage());
         }
         return sc;
