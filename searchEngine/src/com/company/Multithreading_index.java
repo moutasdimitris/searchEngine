@@ -2,8 +2,10 @@ package com.company;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Entities;
 import org.jsoup.safety.Whitelist;
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.RejectedExecutionException;
@@ -51,52 +53,62 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
     public HashSet<TFD> call() {
         try {
             Document  document = Jsoup.connect(URL).get();
-            String[] v = Jsoup.clean(document.html(), Whitelist.none()).split(" ",0);
+            String v1 = Jsoup.clean(document.html(), Whitelist.none()).toLowerCase();
+            Document doc=Jsoup.parse(v1);
+            doc.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
+            String [] v=v1.split(" ");
             for (String s : v) {
-                if (!s.isEmpty()) {
-                    if (!(s.endsWith(".") && s.endsWith(",") && s.endsWith(";")  && s.endsWith("'") && s.endsWith(":"))){
-                        TFD tfd = new TFD();
-                        tfd.doc_id = URL;
-                        tfd.freq = 1;
-                        tfd.text = s.toLowerCase();
-                        sc.add(tfd);
-                }else{
-                        if (s.endsWith(".")){
-                            String text=clean_more(s,".");
+                if (!s.isEmpty())
+                    if (!(s.endsWith(".") && s.endsWith(",") && s.endsWith(";") && s.endsWith("'") && s.endsWith(":"))) {
+                       boolean b=check_if_exist(s, sc);
+                       if (!b){
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = text.toLowerCase();
+                            tfd.text = s.toLowerCase();
                             sc.add(tfd);}
-                        if  (s.endsWith(",")) {
-                            String text=clean_more(s,",");
+                    } else {
+                        if (s.endsWith(".")) {
+                            String text = clean_more(s, ".");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
                             tfd.text = text.toLowerCase();
-                            sc.add(tfd); }
-                        if  (s.endsWith(";")) {
-                            String text=clean_more(s,";");
+                            sc.add(tfd);
+                        }
+                        if (s.endsWith(",")) {
+                            String text = clean_more(s, ",");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
                             tfd.text = text.toLowerCase();
-                            sc.add(tfd);}
-                        if  (s.endsWith("'")){
-                            String text=clean_more(s,"'");
+                            sc.add(tfd);
+                        }
+                        if (s.endsWith(";")) {
+                            String text = clean_more(s, ";");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
                             tfd.text = text.toLowerCase();
-                            sc.add(tfd);}
-                        if  (s.endsWith(":")){
-                            String text=clean_more(s,":");
+                            sc.add(tfd);
+                        }
+                        if (s.endsWith("'")) {
+                            String text = clean_more(s, "'");
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
                             tfd.text = text.toLowerCase();
-                            sc.add(tfd);}
-                }}
+                            sc.add(tfd);
+                        }
+                        if (s.endsWith(":")) {
+                            String text = clean_more(s, ":");
+                            TFD tfd = new TFD();
+                            tfd.doc_id = URL;
+                            tfd.freq = 1;
+                            tfd.text = text.toLowerCase();
+                            sc.add(tfd);
+                        }
+                    }
             }
         } catch (IOException | RejectedExecutionException e) {
             System.out.println("Something went wrong: "+e.getMessage());
@@ -110,4 +122,14 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
                 s=text.replace(symbol,"");
         return s;
     }
-}
+
+    private boolean check_if_exist(String x,HashSet<TFD> h){
+        boolean bool=false;
+            for (TFD tfd : h) {
+                if (tfd.getText().equals(x)){
+                    tfd.setFreq(tfd.getFreq()+1);
+                    bool=true;
+                }
+    }
+        return bool;
+}}
