@@ -26,7 +26,7 @@ class query_processor {
    double idfCalculator(HashSet<String> totalTerms, String termToCheck) {
         double count = 0;
         for (String s : totalTerms) {
-                if (s.equals(termToCheck)) {
+            if (s.equals(termToCheck)) {
                     count++;
                     break;
                 }

@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.concurrent.*;
 
@@ -38,7 +39,8 @@ class Crawler {
         try {
             parsing_URL(URL, executor);
             for (String x : links) {
-                Future<HashSet<String>> sumResult = executor.submit(new Multithreading(x));
+                Multithreading mul=new Multithreading(x);
+                Future<HashSet<String>> sumResult = executor.submit(mul);
                 for (String d : sumResult.get()) {
                     if (i > 0) {
                         hashSet.add(d);
@@ -60,7 +62,8 @@ class Crawler {
 
     private void parsing_URL(String URL, ExecutorService executor) {
         try {
-            Document document = Jsoup.connect(URL).get();
+            URL url1=new URL(URL);
+            Document document = Jsoup.connect(String.valueOf(url1)).get();
             Elements linksOnPage = document.select("a[href]");
             for (Element link : linksOnPage) {
                 links.add(link.attr("abs:href"));
