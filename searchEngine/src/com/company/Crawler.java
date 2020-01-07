@@ -1,10 +1,8 @@
 package com.company;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -13,11 +11,13 @@ import java.util.concurrent.*;
 
 
 class Crawler {
-    private HashSet<String> links = new HashSet<>();
-    private HashSet<String> hashSet = new HashSet<>();
+    private HashSet<String> links ;
+    private HashSet<String> hashSet;
     private int i;
 
     Crawler() {
+        links = new HashSet<>();
+        hashSet = new HashSet<>();
     }
 
 
@@ -53,6 +53,7 @@ class Crawler {
         }
         executor.shutdown();
         while (!executor.isTerminated()) {
+
         }
     }
 
