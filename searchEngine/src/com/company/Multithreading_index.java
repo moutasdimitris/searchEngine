@@ -5,7 +5,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Entities;
 import org.jsoup.safety.Whitelist;
 import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.RejectedExecutionException;
