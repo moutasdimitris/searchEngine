@@ -4,7 +4,7 @@ package com.company;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import com.company.Crawler;
+
 
 public class Main {
 
@@ -14,7 +14,7 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         System.out.print("Search > ");
         String search=sc.next();
-        cr.get_Links("https://www.sammobile.com/", 20, 8, true);
+        cr.get_Links("https://www.google.com/", 10, 8, true);
         HashSet<String> links = cr.getHashSet();
         Indexer index = new Indexer();
         index.clean_html(links);
