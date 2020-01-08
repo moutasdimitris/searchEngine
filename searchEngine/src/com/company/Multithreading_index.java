@@ -81,8 +81,8 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
                         }
                     }
             }
-        } catch (IOException | RejectedExecutionException | IllegalArgumentException e) {
-            System.out.println("Something went wrong: "+e.getMessage());
+        } catch (IOException | RejectedExecutionException | IllegalArgumentException ignored) {
+
         }
         return sc;
     }

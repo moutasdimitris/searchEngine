@@ -30,8 +30,8 @@ public class Multithreading implements Callable <HashSet<String>> {
                 link.add(links.attr("abs:href"));
             }
 
-        }catch (IOException | RejectedExecutionException | IllegalArgumentException e){
-            System.out.println("Something went wrong");
+        }catch (IOException | RejectedExecutionException | IllegalArgumentException ignored){
+
         }
         return link;
     }

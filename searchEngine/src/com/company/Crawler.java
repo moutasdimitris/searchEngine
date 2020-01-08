@@ -35,7 +35,7 @@ class Crawler {
         }
     }
 
-    private void parse(String URL, ExecutorService executor) throws ExecutionException, IOException {
+    private void parse(String URL, ExecutorService executor) throws ExecutionException {
         try {
             parsing_URL(URL, executor);
             for (String x : links) {
@@ -50,8 +50,7 @@ class Crawler {
                     }
                 }
             }
-        } catch (InterruptedException | RejectedExecutionException | IllegalArgumentException e) {
-            System.out.println("Task exception: " + e.getMessage());
+        } catch (InterruptedException | RejectedExecutionException | IllegalArgumentException ignored) {
         }
         executor.shutdown();
         while (!executor.isTerminated()) {
@@ -74,8 +73,8 @@ class Crawler {
                     executor.shutdown();
                 }
             }
-        } catch (IOException | RejectedExecutionException e) {
-            System.out.println("Task exception: " + e.getMessage());
+        } catch (IOException | RejectedExecutionException ignored) {
+
         }
     }
 

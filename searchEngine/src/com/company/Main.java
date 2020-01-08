@@ -10,9 +10,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         HashSet<String> allTerms=new HashSet<>();
         Crawler cr = new Crawler();
-        //Scanner sc=new Scanner(System.in);
-        //System.out.print("Search > ");
-        //String search=sc.next();
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Search > ");
+        String search=sc.next();
         cr.get_Links("https://www.google.com/", 5, 8, true);
         HashSet<String> links = cr.getHashSet();
         Indexer index = new Indexer();
@@ -23,10 +23,10 @@ public class Main {
                 allTerms.add(tfd.getText());
             }
         }
-            /*for (String str : allTerms) {
+            for (String str : allTerms) {
                 System.out.println(str);}
 
-     /*   String [] term_to_search=search.split(" ");
+        String [] term_to_search=search.split(" ");
         query_processor queryProcessor=new query_processor();
         for (String termToSearch : term_to_search) {
             double tf = queryProcessor.tfCalculator(allTerms, termToSearch);
@@ -34,7 +34,7 @@ public class Main {
             double idf=queryProcessor.idfCalculator(allTerms,termToSearch);
             System.out.println(termToSearch+" tf is "+tf+ " and idf is "+idf);
         }
-*/
+
         for (HashSet<TFD> s : terms) {
                for (TFD tfd : s) {
              System.out.println("("+tfd.getText()+", "+tfd.getDoc_id()+", "+tfd.getFreq()+")");
