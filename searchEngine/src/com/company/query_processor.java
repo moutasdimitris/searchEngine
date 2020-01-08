@@ -16,7 +16,6 @@ class query_processor {
                 count++;
             }
         }
-        //System.out.println("counter is "+ count+ " "+totalterms.size());
         double d=count/(double)totalterms.size();
         System.out.println("d is "+d);
         return d;

@@ -14,6 +14,7 @@ import java.util.concurrent.RejectedExecutionException;
 public class Multithreading_index implements Callable<HashSet<TFD>> {
         private String URL;
         private HashSet<TFD> sc=new HashSet<>();
+        private String [] exc={".",",",";","'",":","@","[","]","{","}","|","-","+","?","=",};
 
 
     Multithreading_index(String url) {
@@ -29,56 +30,16 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
             doc.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
             String [] v=v1.split(" ");
             for (String s : v) {
-                if (!s.isEmpty())
-                    if (!(s.endsWith(".") && s.endsWith(",") && s.endsWith(";") && s.endsWith("'") && s.endsWith(":"))) {
-                       boolean b=check_if_exist(s, sc);
+                if (!s.isEmpty()){
+                    String text=cleaner(s);
+                    if (!(text.equals(""))){
+                       boolean b=check_if_exist(text, sc);
                        if (!b){
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
-                            tfd.text = s.toLowerCase();
-                            sc.add(tfd);}
-                    } else {
-                        if (s.endsWith(".")) {
-                            String text = clean_more(s, ".");
-                            TFD tfd = new TFD();
-                            tfd.doc_id = URL;
-                            tfd.freq = 1;
                             tfd.text = text.toLowerCase();
-                            sc.add(tfd);
-                        }
-                        if (s.endsWith(",")) {
-                            String text = clean_more(s, ",");
-                            TFD tfd = new TFD();
-                            tfd.doc_id = URL;
-                            tfd.freq = 1;
-                            tfd.text = text.toLowerCase();
-                            sc.add(tfd);
-                        }
-                        if (s.endsWith(";")) {
-                            String text = clean_more(s, ";");
-                            TFD tfd = new TFD();
-                            tfd.doc_id = URL;
-                            tfd.freq = 1;
-                            tfd.text = text.toLowerCase();
-                            sc.add(tfd);
-                        }
-                        if (s.endsWith("'")) {
-                            String text = clean_more(s, "'");
-                            TFD tfd = new TFD();
-                            tfd.doc_id = URL;
-                            tfd.freq = 1;
-                            tfd.text = text.toLowerCase();
-                            sc.add(tfd);
-                        }
-                        if (s.endsWith(":")) {
-                            String text = clean_more(s, ":");
-                            TFD tfd = new TFD();
-                            tfd.doc_id = URL;
-                            tfd.freq = 1;
-                            tfd.text = text.toLowerCase();
-                            sc.add(tfd);
-                        }
+                            sc.add(tfd);}}
                     }
             }
         } catch (IOException | RejectedExecutionException | IllegalArgumentException ignored) {
@@ -87,12 +48,6 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
         return sc;
     }
 
-    private String clean_more(String text,String symbol){
-        String s="";
-            if (text.endsWith(symbol))
-                s=text.replace(symbol,"");
-        return s;
-    }
 
     private boolean check_if_exist(String x,HashSet<TFD> h){
         boolean bool=false;
@@ -103,4 +58,16 @@ public class Multithreading_index implements Callable<HashSet<TFD>> {
                 }
     }
         return bool;
-}}
+}
+
+    private String cleaner(String word){
+        String text=word;
+      for (String s : exc) {
+         if (text.contains(s)) {
+             text = text.replace(s, "");
+         }
+      }
+      return text;
+    }
+
+    }

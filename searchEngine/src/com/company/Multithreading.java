@@ -31,7 +31,6 @@ public class Multithreading implements Callable <HashSet<String>> {
             }
 
         }catch (IOException | RejectedExecutionException | IllegalArgumentException ignored){
-
         }
         return link;
     }
