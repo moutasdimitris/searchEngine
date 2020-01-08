@@ -5,31 +5,36 @@ import java.util.HashSet;
 
 class query_processor {
 
+double tf_idf_calc(String str, HashSet<TFD> links){
+    double d1=tfCalculator(str,links);
+    double d2=idfCalculator(str,links);
+    return d1/d2;
+}
 
-    double tfCalculator(HashSet<String> totalterms, String termToCheck)
+    private double tfCalculator(String str, HashSet<TFD> links)
     {
-        double count = 0;
-        for (String s : totalterms)
+        double maxl=0;
+        double freq=0;
+        for (TFD tfd:links)
         {
-            if (s.equals(termToCheck))
+            maxl+=tfd.getFreq();
+            if (str.equals(tfd.getText()))
             {
-                count++;
+                freq=tfd.getFreq();
             }
         }
-        double d=count/(double)totalterms.size();
-        System.out.println("d is "+d);
-        return d;
+        return freq/maxl;
     }
 
 
-   double idfCalculator(HashSet<String> totalTerms, String termToCheck) {
-        double count = 0;
-        for (String s : totalTerms) {
-            if (s.equals(termToCheck)) {
-                    count++;
-                    break;
-                }
+   private double idfCalculator(String str, HashSet<TFD> links) {
+    double count=0;
+        for (TFD tfd:links){
+            if (tfd.getText().equals(str)){
+                count++;
             }
-            return 1 + Math.log(totalTerms.size() / count);
+
+        }
+            return  Math.log(links.size() / count);
 
     }}
