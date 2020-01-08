@@ -17,7 +17,7 @@ public class Main {
         String [] term_to_search=search.split(" ");
         query_processor queryProcessor=new query_processor();
         Crawler cr = new Crawler();
-        cr.get_Links("https://www.google.com/", 5, 8, true);
+        cr.get_Links("https://www.google.com/", 50, 8, true);
         HashSet<String> links = cr.getHashSet();
         Indexer index = new Indexer();
         index.clean_html(links);
@@ -39,5 +39,9 @@ public class Main {
         j=0;
         i++;
         }
+    for (int q=0;q<term_to_search.length;q++){
+        for (int w=0;w<terms.size();w++){
+        System.out.println(weights[q][w]);
+    }}
     }}
 
