@@ -3,7 +3,7 @@ package com.company;
 import java.util.HashSet;
 
 
-class query_processor {
+class tfdidfcalc {
 
 double tf_idf_calc(String str, HashSet<TFD> links){
     double d1=tfCalculator(str,links);
