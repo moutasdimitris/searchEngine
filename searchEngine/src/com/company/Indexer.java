@@ -7,23 +7,21 @@ import java.util.concurrent.Future;
 
 
 class Indexer {
-    private HashSet<HashSet<TFD>> hash;
+    private HashSet<HashSet<TFD>> tfd;
 
      HashSet<HashSet<TFD>> getHash() {
-        return hash;
+        return tfd;
     }
-
     Indexer() {
-        hash = new HashSet<>();
+        tfd = new HashSet<>();
     }
 
 
     void clean_html(HashSet<String> urls) throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
         for (String URL : urls) {
-          //  System.out.println(URL);
-            Future<HashSet<TFD>> sumResult = executor.submit(new Multithreading_index(URL));
-            hash.add(sumResult.get());
+            Future<HashSet<TFD>> sumResult = executor.submit(new MultithreadingForWebText(URL));
+            tfd.add(sumResult.get());
         }
         executor.shutdown();
     }
