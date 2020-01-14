@@ -15,7 +15,7 @@ class TfIdfCalc {
             maxl+=tfd.getFreq();
             if (str.equals(tfd.getText()))
             {
-                freq=tfd.getFreq();
+                freq++;
             }
         }
         if (freq==0){

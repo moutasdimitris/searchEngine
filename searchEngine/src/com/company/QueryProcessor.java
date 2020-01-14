@@ -1,8 +1,5 @@
 package com.company;
 
-import org.jsoup.select.Evaluator;
-
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -16,8 +13,8 @@ public class QueryProcessor {
     QueryProcessor(){
         Scanner sc=new Scanner(System.in);
         System.out.print("Search > ");
-        String search=sc.nextLine();
-        termToSearch =search.split(" ");
+       String search=sc.nextLine();
+       termToSearch =search.split(" ");
     }
 
 
@@ -66,10 +63,10 @@ public class QueryProcessor {
         }
 
         CosineSimilarityCalc cosineSimilarityCalc=new CosineSimilarityCalc();
-        double[] tempAr=new double[tfIdf[0].length];
-        for (int g=0;g<tfIdf.length;g++){
-            for (int u=0;u<tfIdf[0].length;u++){
-                double c=tfIdf[g][u];
+        double[] tempAr=new double[tfIdf.length];
+        for (int g=0;g<tfIdf[0].length;g++){
+            for (int u=0;u<tfIdf.length;u++){
+                double c=tfIdf[u][g];
                 tempAr[u]=c;
             }
             cos[g]=cosineSimilarityCalc.calc(tempAr,termTfIdf);
