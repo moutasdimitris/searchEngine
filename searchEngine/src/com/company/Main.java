@@ -3,7 +3,7 @@ package com.company;
 
 import java.util.Arrays;
 import java.util.HashSet;
-
+import java.util.Scanner;
 
 
 public class Main {
@@ -14,7 +14,7 @@ public class Main {
         HashSet<HashSet<TFD>> sets;//All (w,d,f)
 
         Crawler cr = new Crawler();
-        cr.crawling("https://www.google.com/", 5, 10, true);
+        cr.crawling("https://www.sammobile.com/", 50, 10, true);
         links=cr.getLinks();
 
         Indexer index = new Indexer();
@@ -26,16 +26,20 @@ public class Main {
                 words.add(tfd.getText());
              }
         }
+        Scanner sc=new Scanner(System.in);
+        String search;
 
-
-        QueryProcessor queryProcessor=new QueryProcessor();
-        double [] results=queryProcessor.CalculateResults(words,links.size(),sets);
-        System.out.println("Final cosine similarity ");
-        System.out.println(Arrays.toString(results));
-
-        long endTime   = System.nanoTime();
-        long totalTime = endTime - startTime;
-        System.out.println("Total execution time: "+totalTime/1000000000+"sec.");
+        do {
+            System.out.print("Search > ");
+            search=sc.nextLine();
+            QueryProcessor queryProcessor = new QueryProcessor(search);
+            double[] results = queryProcessor.CalculateResults(words, links.size(), sets);
+            System.out.println("Final cosine similarity ");
+            System.out.println(Arrays.toString(results));
+            long endTime   = System.nanoTime();
+            long totalTime = endTime - startTime;
+            System.out.println("Total execution time: "+totalTime/1000000000+"sec.");
+        }while (!search.equals(""));
 
     }}
 

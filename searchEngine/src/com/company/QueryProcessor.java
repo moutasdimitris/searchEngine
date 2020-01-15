@@ -10,10 +10,8 @@ public class QueryProcessor {
     String [] termToSearch;
 
 
-    QueryProcessor(){
-        Scanner sc=new Scanner(System.in);
-        System.out.print("Search > ");
-       String search=sc.nextLine();
+    QueryProcessor(String search){
+
        termToSearch =search.split(" ");
     }
 

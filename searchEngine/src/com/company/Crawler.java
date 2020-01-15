@@ -58,6 +58,7 @@ public class Crawler {
                     }
                 }
             }
+            executor.shutdown();
         }catch (Exception ignored) {
         }
     }
