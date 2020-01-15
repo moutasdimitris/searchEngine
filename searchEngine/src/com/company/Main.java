@@ -25,7 +25,8 @@ public class Main {
                 words.add(tfd.getText());
              }
         }
-System.out.println(words);
+
+        System.out.println(words);
         QueryProcessor queryProcessor=new QueryProcessor();
         double [] results=queryProcessor.CalculateResults(words,links.size(),sets);
         System.out.println("Final cosine similarity ");
