@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
-import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.concurrent.*;
 
@@ -50,8 +50,9 @@ public class Crawler {
                 Future<HashSet<String>> sumResult = executor.submit(new Multithreading(x));
                 for (String d : sumResult.get()) {
                     if (i>0){
+                        if (!links.contains(d)){
                     links.add(d);
-                    i--;
+                    i--;}
                 }else {
                     executor.shutdown();
                     }

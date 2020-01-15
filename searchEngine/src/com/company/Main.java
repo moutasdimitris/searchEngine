@@ -16,6 +16,7 @@ public class Main {
         Crawler cr = new Crawler();
         cr.crawling("https://www.google.com/", 5, 10, true);
         links=cr.getLinks();
+
         Indexer index = new Indexer();
         index.clean_html(links);
         sets=index.getHash();
@@ -26,7 +27,7 @@ public class Main {
              }
         }
 
-        System.out.println(words);
+
         QueryProcessor queryProcessor=new QueryProcessor();
         double [] results=queryProcessor.CalculateResults(words,links.size(),sets);
         System.out.println("Final cosine similarity ");
