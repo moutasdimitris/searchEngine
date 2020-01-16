@@ -32,10 +32,11 @@ public class Main {
         do {
             System.out.print("Search > ");
             search=sc.nextLine();
+            if (!search.equals("")){
             QueryProcessor queryProcessor = new QueryProcessor(search);
             double[] results = queryProcessor.CalculateResults(words, links.size(), sets);
             System.out.println("Final cosine similarity ");
-            System.out.println(Arrays.toString(results));
+            System.out.println(Arrays.toString(results));}
             long endTime   = System.nanoTime();
             long totalTime = endTime - startTime;
             System.out.println("Total execution time: "+totalTime/1000000000+"sec.");
