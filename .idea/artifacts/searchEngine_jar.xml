@@ -2,7 +2,7 @@
   <artifact type="jar" name="searchEngine:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/searchEngine_jar</output-path>
     <root id="archive" name="searchEngine.jar">
-      <element id="module-output" name="searchEngine" />
+      <element id="module-output" name="CrawlerIndexer" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/jsoup-1.12.1.jar" path-in-jar="/" />
     </root>
   </artifact>
