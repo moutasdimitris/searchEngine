@@ -6,6 +6,10 @@ import org.jsoup.nodes.Entities;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.RejectedExecutionException;
@@ -14,6 +18,7 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private String URL;
     private HashSet<TFD> sc=new HashSet<>();
     private String [] exc={".",",",";","'",":","@","[","]","{","}","|","-","+","?","=","!","<<",">>","&"};
+    PreparedStatement preparedStmt;
 
 
     MultithreadingForWebText(String url) {
@@ -23,6 +28,17 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     @Override
     public HashSet<TFD> call()  {
         try {
+
+            // create a mysql database connection
+            String myDriver = "com.mysql.jdbc.Driver";
+            String myUrl = "jdbc:mysql://159.203.191.150:3306/SearchEngineDb";
+            Class.forName(myDriver);
+            Connection conn = DriverManager.getConnection(myUrl, "test", "test");
+
+            // the mysql insert statement
+            String query = " insert into records (word,link,freq)" + " values (?, ?, ?)";
+            // create the mysql insert preparedstatement
+            preparedStmt = conn.prepareStatement(query);
             Document document = Jsoup.connect(URL).get();
             String v1 = Jsoup.clean(document.html(), Whitelist.none()).toLowerCase();
             Document doc=Jsoup.parse(v1);
@@ -32,31 +48,44 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
                 if (!s.isEmpty()){
                     String text=cleaner(s);
                     if (!(text.equals(""))){
-                        boolean b=check_if_exist(text, sc);
+                        boolean b=check_if_exist(text,URL, sc);
                         if (!b){
                             TFD tfd = new TFD();
                             tfd.doc_id = URL;
                             tfd.freq = 1;
                             tfd.text = text.toLowerCase();
-                            sc.add(tfd);}}
+                            sc.add(tfd);
+                        }}
                 }
-            }
-        } catch (IOException | RejectedExecutionException | IllegalArgumentException ignored) {
 
+            }
+            insertToDb(sc);
+            conn.close();
+        } catch (IOException | RejectedExecutionException | IllegalArgumentException | SQLException | ClassNotFoundException ignored) {
+            System.out.println(ignored.getMessage());
         }
         return sc;
     }
 
 
-    private boolean check_if_exist(String x,HashSet<TFD> h){
+    private boolean check_if_exist(String x,String url,HashSet<TFD> h){
         boolean bool=false;
         for (TFD tfd : h) {
-            if (tfd.getText().equals(x)){
-                tfd.setFreq(tfd.getFreq()+1);
+            if (tfd.getText().equals(x)&&tfd.getDoc_id().equals(url) ){
+              tfd.setFreq(tfd.getFreq()+1);
                 bool=true;
             }
         }
         return bool;
+    }
+
+    private void insertToDb(HashSet<TFD> d) throws SQLException {
+        for (TFD tfd:d){
+            preparedStmt.setString (1, tfd.getText());
+            preparedStmt.setString (2, tfd.getDoc_id());
+            preparedStmt.setInt    (3, tfd.getFreq());
+            preparedStmt.execute();
+        }
     }
 
     private String cleaner(String word){

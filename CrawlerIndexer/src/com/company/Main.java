@@ -12,7 +12,8 @@ public class Main {
         HashSet<String> links;//All links
         HashSet<HashSet<TFD>> sets;//All (w,d,f)
         Crawler cr = new Crawler();
-        cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
+       // cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
+        cr.crawling("https://www.sammobile.com",2,10,false);
         links=cr.getLinks();
 
         Indexer index = new Indexer();
@@ -23,11 +24,6 @@ public class Main {
             for (TFD tfd:s){
                 words.add(tfd.getText());
              }
-        }
-        for (HashSet<TFD> s : sets) {
-            for (TFD tfd:s){
-        System.out.println(tfd.getText()+" "+tfd.getDoc_id()+" "+tfd.getFreq());
-            }
         }
     }
 }
