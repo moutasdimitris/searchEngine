@@ -13,7 +13,7 @@ public class Main {
         HashSet<HashSet<TFD>> sets;//All (w,d,f)
         Crawler cr = new Crawler();
        // cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
-        cr.crawling("https://www.sammobile.com",2,10,false);
+        cr.crawling("https://www.theverge.com",1,10,false);
         links=cr.getLinks();
 
         Indexer index = new Indexer();
