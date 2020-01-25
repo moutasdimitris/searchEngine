@@ -9,9 +9,10 @@ import java.util.concurrent.Future;
 class Indexer {
     private HashSet<HashSet<TFD>> tfd;
 
-     HashSet<HashSet<TFD>> getHash() {
+    HashSet<HashSet<TFD>> getHash() {
         return tfd;
     }
+
     Indexer() {
         tfd = new HashSet<>();
     }
