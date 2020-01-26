@@ -1,24 +1,24 @@
 package com.company;
 
  class TFD {
-        String text;
-        String doc_id;
-        Integer freq;
+        String textTerm;
+        String documentId;
+        Integer termFrequency;
 
-        String getText() {
-            return text;
+        String getTextTerm() {
+            return textTerm;
         }
 
-        String getDoc_id() {
-            return doc_id;
+        String getDocumentId() {
+            return documentId;
         }
 
-        Integer getFreq() {
-            return freq;
+        Integer getTermFrequency() {
+            return termFrequency;
         }
 
-        void setFreq(Integer freq) {
-            this.freq = freq;
+        void setTermFrequency(Integer termFrequency) {
+            this.termFrequency = termFrequency;
         }
 
 

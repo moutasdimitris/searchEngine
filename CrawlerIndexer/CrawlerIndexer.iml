@@ -20,5 +20,8 @@
     </orderEntry>
     <orderEntry type="library" name="jsoup-1.12.11" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.48-bin" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" name="okhttp-3.14.4" level="project" />
+    <orderEntry type="library" name="com.squareup.retrofit2:converter-gson:2.7.1" level="project" />
   </component>
 </module>

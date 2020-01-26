@@ -40,17 +40,17 @@ public class Crawler {
 
 
     private void clearPreviousData() throws ClassNotFoundException, SQLException {
-        String myDriver = "com.mysql.jdbc.Driver";
-        String myUrl = "jdbc:mysql://159.203.191.150:3306/SearchEngineDb";
-        Class.forName(myDriver);
-        Connection conn = DriverManager.getConnection(myUrl, "test", "test");
-        String query = "drop table if exists SearchEngineDb.records";
-        String query1 = "create table records(word varchar(1000),link varchar(1000),freq int)";
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        PreparedStatement preparedStatement1 = conn.prepareStatement(query1);
-        preparedStatement.execute();
-        preparedStatement1.execute();
-        conn.close();
+//        String myDriver = "com.mysql.jdbc.Driver";
+//        String myUrl = "jdbc:mysql://159.203.191.150:3306/SearchEngineDb";
+//        Class.forName(myDriver);
+//        Connection conn = DriverManager.getConnection(myUrl, "test", "test");
+//        String query = "drop table if exists SearchEngineDb.records";
+//        String query1 = "create table records(word varchar(1000),link varchar(1000),freq int)";
+//        PreparedStatement preparedStatement = conn.prepareStatement(query);
+//        PreparedStatement preparedStatement1 = conn.prepareStatement(query1);
+//        preparedStatement.execute();
+//        preparedStatement1.execute();
+//        conn.close();
 
     }
 

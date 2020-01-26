@@ -1,13 +1,18 @@
 package com.company;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Entities;
 import org.jsoup.safety.Whitelist;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -18,7 +23,7 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private String URL;
     private HashSet<TFD> sc = new HashSet<>();
     private String[] exc = {".", ",", ";", "'", ":", "@", "[", "]", "{", "}", "|", "-", "+", "?", "=", "!", "<<", ">>", "&"};
-    PreparedStatement preparedStmt;
+//    PreparedStatement preparedStmt;
 
 
     MultithreadingForWebText(String url) {
@@ -32,7 +37,7 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
             // the mysql insert statement
             String query = " insert into records (word,link,freq)" + " values (?, ?, ?)";
             // create the mysql insert preparedstatement
-            preparedStmt = Main.conn.prepareStatement(query);
+//            preparedStmt = Main.conn.prepareStatement(query);
             Document document = Jsoup.connect(URL).get();
             String v1 = Jsoup.clean(document.html(), Whitelist.none()).toLowerCase();
             Document doc = Jsoup.parse(v1);
@@ -45,17 +50,18 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
                         boolean b = check_if_exist(text, URL, sc);
                         if (!b) {
                             TFD tfd = new TFD();
-                            tfd.doc_id = URL;
-                            tfd.freq = 1;
-                            tfd.text = text.toLowerCase();
+                            tfd.documentId = URL;
+                            tfd.termFrequency = 1;
+                            tfd.textTerm = text.toLowerCase();
                             sc.add(tfd);
                         }
                     }
                 }
 
             }
-            insertToDb(sc);
-        } catch (IOException | RejectedExecutionException | IllegalArgumentException | SQLException ignored) {
+            Main.sendDocuments(sc);
+//            insertToDb(sc);
+        } catch (IOException | RejectedExecutionException | IllegalArgumentException ignored) {
             System.out.println(ignored.getMessage());
         }
         return sc;
@@ -65,23 +71,23 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private boolean check_if_exist(String x, String url, HashSet<TFD> h) {
         boolean bool = false;
         for (TFD tfd : h) {
-            if (tfd.getText().equals(x) && tfd.getDoc_id().equals(url)) {
-                tfd.setFreq(tfd.getFreq() + 1);
+            if (tfd.getTextTerm().equals(x) && tfd.getDocumentId().equals(url)) {
+                tfd.setTermFrequency(tfd.getTermFrequency() + 1);
                 bool = true;
             }
         }
         return bool;
     }
 
-    private void insertToDb(HashSet<TFD> d) throws SQLException {
-        for (TFD tfd : d) {
-            preparedStmt.setString(1, tfd.getText());
-            preparedStmt.setString(2, tfd.getDoc_id());
-            preparedStmt.setInt(3, tfd.getFreq());
-            preparedStmt.execute();
-        }
-        Main.conn.close();
-    }
+//    private void insertToDb(HashSet<TFD> d) throws SQLException {
+//        for (TFD tfd : d) {
+//            preparedStmt.setString(1, tfd.getTextTerm());
+//            preparedStmt.setString(2, tfd.getDocumentId());
+//            preparedStmt.setInt(3, tfd.getTermFrequency());
+//            preparedStmt.execute();
+//        }
+//        Main.conn.close();
+//    }
 
     private String cleaner(String word) {
         String text = word;
@@ -92,4 +98,5 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
         }
         return text;
     }
+
 }
