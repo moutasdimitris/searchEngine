@@ -60,6 +60,7 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
 
             }
             Main.sendDocuments(sc);
+            System.out.println("Must be " + (++Main.requests) + " and the size of this request is " + sc.size() + " elements.");
 //            insertToDb(sc);
         } catch (IOException | RejectedExecutionException | IllegalArgumentException ignored) {
             System.out.println(ignored.getMessage());

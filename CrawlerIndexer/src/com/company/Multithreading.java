@@ -18,7 +18,6 @@ public class Multithreading implements Callable <HashSet<String>> {
 
     Multithreading(String url) {
         this.url=url;
-
     }
 
 
