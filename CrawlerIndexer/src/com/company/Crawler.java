@@ -56,7 +56,7 @@ public class Crawler {
             Document document = (Document) Jsoup.connect(url).get();
             Elements linksOnPage = document.select("a[href]");
             for (Element link : linksOnPage) {
-                if (i > 0) {
+                if (i >=0) {
                     links.add(link.attr("abs:href"));
                     i--;
                 }
@@ -65,7 +65,7 @@ public class Crawler {
             for (String x : links) {
                 Future<HashSet<String>> sumResult = executor.submit(new Multithreading(x));
                 for (String d : sumResult.get()) {
-                    if (i > 0) {
+                    if (i >= 0) {
                         if (!links.contains(d)) {
                             links.add(d);
                             i--;

@@ -43,6 +43,7 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     @Override
     public HashSet<TFD> call() {
         try {
+            System.out.println("url is "+URL);
             Document document = Jsoup.connect(URL).get();
             String v1 = Jsoup.clean(document.html(), Whitelist.none()).toLowerCase();
             Document doc = Jsoup.parse(v1);

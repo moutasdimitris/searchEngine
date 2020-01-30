@@ -9,21 +9,11 @@ import java.util.concurrent.Future;
  * ΚΛΑΣΗ ΠΟΥ ΥΛΟΠΟΙΕΙ ΤΙΣ ΒΑΣΙΚΕΣ ΜΕΘΟΔΟΥΣ ΓΙΑ ΤΟΝ INDEXER.
  */
 class Indexer {
-    /*private HashSet<HashSet<TFD>> tfd;
-
-    /**
-     * ΕΠΙΣΤΡΕΦΕΙ ΕΝΑ HASHSET ΠΟΥ ΠΕΡΙΕΧΕΙ ΕΓΓΡΑΦΕΣ ΤΥΠΟΥ TFD(TERM,DOCID,FREQ).
-     * @return HASHSET<HASHSET<TFD>>.
-     */
-  /*  HashSet<HashSet<TFD>> getHash() {
-        return tfd;
-    }
 
     /**
      * CONSTRUCTOR ΠΟΥ ΜΕ ΤΟ ΚΑΛΕΣΜΑ ΤΟΥ ΔΗΜΙΟΥΡΓΕΙΤΑΙ ΤΟ HASHSET ΟΠΟΥ ΘΑ ΜΠΟΥΝΕ ΟΙ ΕΓΓΡΑΦΕΣ.
      */
     Indexer() {
-     //   tfd = new HashSet<>();
     }
 
     /**
@@ -35,6 +25,7 @@ class Indexer {
         ExecutorService executor = Executors.newFixedThreadPool(10);
         for (String URL : urls) {
             Future<HashSet<TFD>> sumResult = executor.submit(new MultithreadingForWebText(URL));
+            sumResult.get();
             //tfd.add(sumResult.get());
         }
         executor.shutdown();

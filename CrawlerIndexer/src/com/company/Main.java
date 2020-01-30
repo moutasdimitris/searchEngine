@@ -17,11 +17,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
             HashSet<String> links;//All links
-            HashSet<HashSet<TFD>> sets;//All (w,d,f)
             Crawler cr = new Crawler();
-            cr.crawling("https://www.techgear.gr", 1, 10, keepData);
-            //cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
+            cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
             links = cr.getLinks();
+            System.out.println(links);
             Indexer index = new Indexer();
             index.clean_html(links);
 
