@@ -9,6 +9,8 @@
       <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/retrofit-2.7.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

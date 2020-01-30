@@ -5,24 +5,37 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-
+/**
+ * ΚΛΑΣΗ ΠΟΥ ΥΛΟΠΟΙΕΙ ΤΙΣ ΒΑΣΙΚΕΣ ΜΕΘΟΔΟΥΣ ΓΙΑ ΤΟΝ INDEXER.
+ */
 class Indexer {
-    private HashSet<HashSet<TFD>> tfd;
+    /*private HashSet<HashSet<TFD>> tfd;
 
-    HashSet<HashSet<TFD>> getHash() {
+    /**
+     * ΕΠΙΣΤΡΕΦΕΙ ΕΝΑ HASHSET ΠΟΥ ΠΕΡΙΕΧΕΙ ΕΓΓΡΑΦΕΣ ΤΥΠΟΥ TFD(TERM,DOCID,FREQ).
+     * @return HASHSET<HASHSET<TFD>>.
+     */
+  /*  HashSet<HashSet<TFD>> getHash() {
         return tfd;
     }
 
+    /**
+     * CONSTRUCTOR ΠΟΥ ΜΕ ΤΟ ΚΑΛΕΣΜΑ ΤΟΥ ΔΗΜΙΟΥΡΓΕΙΤΑΙ ΤΟ HASHSET ΟΠΟΥ ΘΑ ΜΠΟΥΝΕ ΟΙ ΕΓΓΡΑΦΕΣ.
+     */
     Indexer() {
-        tfd = new HashSet<>();
+     //   tfd = new HashSet<>();
     }
 
-
+    /**
+     * ΜΕΘΟΔΟΣ ΜΕ ΤΗΝ ΟΠΟΙΑ ΠΑΙΡΝΕΙ ΤΟ ΚΕΙΜΕΝΟ ΑΠΟ ΤΙΣ ΣΕΛΙΔΕΣ ΠΟΥ ΜΑΣ ΕΔΩΣΕ Ο CRAWLER.
+     * @param urls HASHSET<STRING> URLS
+     * @throws Exception ΓΙΑ ΤΗ GET()
+     */
     void clean_html(HashSet<String> urls) throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
         for (String URL : urls) {
             Future<HashSet<TFD>> sumResult = executor.submit(new MultithreadingForWebText(URL));
-            tfd.add(sumResult.get());
+            //tfd.add(sumResult.get());
         }
         executor.shutdown();
     }

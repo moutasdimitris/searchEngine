@@ -19,16 +19,27 @@ import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.RejectedExecutionException;
 
+/**
+ * ΚΛΑΣΗ ΠΟΥ ΥΛΟΠΟΙΕΙ ΤΙΣ ΔΙΑΔΙΚΑΣΙΕΣ ΓΙΑ ΤΗΝ ΚΑΤΑΣΚΕΥΗ ΤΟΥ ΚΑΤΑΛΟΓΟΥ.
+ */
 public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private String URL;
     private HashSet<TFD> sc = new HashSet<>();
     private String[] exc = {".", ",", ";", "'", ":", "@", "[", "]", "{", "}", "|", "-", "+", "?", "=", "!", "<<", ">>", "&"};
 
-
+    /**
+     * CONSTRUCTOR ΠΟΥ ΔΕΧΕΤΑΙ ΤΟ URL ΚΑΙ ΤΟ ΑΝΑΘΕΤΕΙ ΣΤΟ STRING URL.
+     * @param url URL.
+     */
     MultithreadingForWebText(String url) {
         this.URL = url;
     }
 
+    /**
+     * ΜΕΘΟΔΟΣ Η ΟΠΟΙΑ ΣΥΝΔΕΕΤΑΙ ΣΤΟ URL ΚΑΙ ΠΑΙΡΝΕΙ ΤΟ ΚΕΙΜΕΝΟ.
+     * ΣΤΗ ΣΥΝΕΧΕΙΑ ΚΑΝΕΙ
+     * @return
+     */
     @Override
     public HashSet<TFD> call() {
         try {
@@ -61,7 +72,13 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
         return sc;
     }
 
-
+    /**
+     *
+     * @param x
+     * @param url
+     * @param h
+     * @return
+     */
     private boolean check_if_exist(String x, String url, HashSet<TFD> h) {
         boolean bool = false;
         for (TFD tfd : h) {
@@ -73,7 +90,11 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
         return bool;
     }
 
-
+    /**
+     *
+     * @param word
+     * @return
+     */
     private String cleaner(String word) {
         String text = word;
         for (String s : exc) {
