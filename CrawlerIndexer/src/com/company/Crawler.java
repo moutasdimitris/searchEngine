@@ -25,7 +25,7 @@ public class Crawler {
     Crawler() {
     }
 
-    void crawling(String URL, int cr_num, int thread_num, boolean keep_data) throws ClassNotFoundException, SQLException {
+    void crawling(String URL, int cr_num, int thread_num, boolean keep_data)  {
         i = cr_num;
 
         if (!keep_data) {

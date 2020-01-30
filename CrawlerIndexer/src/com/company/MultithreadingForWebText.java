@@ -23,7 +23,6 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private String URL;
     private HashSet<TFD> sc = new HashSet<>();
     private String[] exc = {".", ",", ";", "'", ":", "@", "[", "]", "{", "}", "|", "-", "+", "?", "=", "!", "<<", ">>", "&"};
-//    PreparedStatement preparedStmt;
 
 
     MultithreadingForWebText(String url) {
@@ -33,11 +32,6 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     @Override
     public HashSet<TFD> call() {
         try {
-
-            // the mysql insert statement
-            String query = " insert into records (word,link,freq)" + " values (?, ?, ?)";
-            // create the mysql insert preparedstatement
-//            preparedStmt = Main.conn.prepareStatement(query);
             Document document = Jsoup.connect(URL).get();
             String v1 = Jsoup.clean(document.html(), Whitelist.none()).toLowerCase();
             Document doc = Jsoup.parse(v1);
@@ -61,7 +55,6 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
             }
             Main.sendDocuments(sc);
             System.out.println("Must be " + (++Main.requests) + " and the size of this request is " + sc.size() + " elements.");
-//            insertToDb(sc);
         } catch (IOException | RejectedExecutionException | IllegalArgumentException ignored) {
             System.out.println(ignored.getMessage());
         }
@@ -80,15 +73,6 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
         return bool;
     }
 
-//    private void insertToDb(HashSet<TFD> d) throws SQLException {
-//        for (TFD tfd : d) {
-//            preparedStmt.setString(1, tfd.getTextTerm());
-//            preparedStmt.setString(2, tfd.getDocumentId());
-//            preparedStmt.setInt(3, tfd.getTermFrequency());
-//            preparedStmt.execute();
-//        }
-//        Main.conn.close();
-//    }
 
     private String cleaner(String word) {
         String text = word;

@@ -26,5 +26,4 @@ class Indexer {
         }
         executor.shutdown();
     }
-
 }

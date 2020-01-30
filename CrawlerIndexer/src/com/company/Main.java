@@ -4,22 +4,16 @@ package com.company;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.HashSet;
 
 
 public class Main {
 
-    public static Connection conn;
     private static Boolean keepData = false;
     public static int requests = 0;
     public static HashSet<TFD> documentsHashSet = new HashSet<>();
@@ -30,19 +24,18 @@ public class Main {
         HashSet<HashSet<TFD>> sets;//All (w,d,f)
         Crawler cr = new Crawler();
         getDocuments();
-        // cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
-//        cr.crawling("https://www.google.com/", 200, 100, keepData);
-//        links = cr.getLinks();
-//
-//        Indexer index = new Indexer();
-//        index.clean_html(links);
-//        sets = index.getHash();
-//
-//        for (HashSet<TFD> s : sets) {
-//            for (TFD tfd : s) {
-//                words.add(tfd.getTextTerm());
-//            }
-//        }
+         cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
+        links = cr.getLinks();
+
+        Indexer index = new Indexer();
+        index.clean_html(links);
+        sets = index.getHash();
+
+        for (HashSet<TFD> s : sets) {
+            for (TFD tfd : s) {
+                words.add(tfd.getTextTerm());
+            }
+        }
     }
 
     public static void sendDocuments(HashSet<TFD> docsHashSet) {
@@ -60,6 +53,7 @@ public class Main {
                 keepData = true;
                 if (response.code() == 200) {
                     System.out.println(response.body().get("message").getAsString());
+
                 } else {
                     System.out.println("Error with code: " + response.code());
                 }
@@ -88,6 +82,7 @@ public class Main {
 
                 if (code == 200) {
                     documentsHashSet = new Gson().fromJson(response.body(), HashSet.class);
+
                 } else {
                     System.out.println("Error with code: " + code);
                 }
