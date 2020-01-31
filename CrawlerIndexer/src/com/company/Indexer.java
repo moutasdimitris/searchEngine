@@ -6,27 +6,30 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * ΚΛΑΣΗ ΠΟΥ ΥΛΟΠΟΙΕΙ ΤΙΣ ΒΑΣΙΚΕΣ ΜΕΘΟΔΟΥΣ ΓΙΑ ΤΟΝ INDEXER.
+ * Η κλάση αυτή υλοποιεί τις βασικές μεθόδους που θα χρειαστούν για τον
+ * Indexer.
+ * @author Matskidis Ioannis
+ * @author Moutafidis Dimitrios
  */
 class Indexer {
 
     /**
-     * CONSTRUCTOR ΠΟΥ ΜΕ ΤΟ ΚΑΛΕΣΜΑ ΤΟΥ ΔΗΜΙΟΥΡΓΕΙΤΑΙ ΤΟ HASHSET ΟΠΟΥ ΘΑ ΜΠΟΥΝΕ ΟΙ ΕΓΓΡΑΦΕΣ.
+     * Constructor.
      */
     Indexer() {
     }
 
     /**
-     * ΜΕΘΟΔΟΣ ΜΕ ΤΗΝ ΟΠΟΙΑ ΠΑΙΡΝΕΙ ΤΟ ΚΕΙΜΕΝΟ ΑΠΟ ΤΙΣ ΣΕΛΙΔΕΣ ΠΟΥ ΜΑΣ ΕΔΩΣΕ Ο CRAWLER.
-     * @param urls HASHSET<STRING> URLS
-     * @throws Exception ΓΙΑ ΤΗ GET()
+     * Μέθοδος η οποία καλεί την MultithreadingForWebText και φροντίζει για τη δημιουργία του καταλόγου
+     * κάνοντας παράλληλα όλες τις απαραίτητες αλλαγές (καθαρισμός λέξης,έλεγχος εάν υπάρχει ήδη) και τις επιστρέφει.
+     * @param urls HASHSET<STRING> urls.
+     * @throws Exception Για την Get().
      */
-    void clean_html(HashSet<String> urls) throws Exception {
+    void cleanHtml(HashSet<String> urls) throws Exception {
         ExecutorService executor = Executors.newFixedThreadPool(10);
         for (String URL : urls) {
             Future<HashSet<TFD>> sumResult = executor.submit(new MultithreadingForWebText(URL));
             sumResult.get();
-            //tfd.add(sumResult.get());
         }
         executor.shutdown();
     }

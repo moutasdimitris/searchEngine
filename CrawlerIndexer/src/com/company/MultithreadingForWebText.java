@@ -20,7 +20,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
- * ΚΛΑΣΗ ΠΟΥ ΥΛΟΠΟΙΕΙ ΤΙΣ ΔΙΑΔΙΚΑΣΙΕΣ ΓΙΑ ΤΗΝ ΚΑΤΑΣΚΕΥΗ ΤΟΥ ΚΑΤΑΛΟΓΟΥ.
+ * Κλάση η οποία υλοποιεί τις βασικές διαδικασίες για την δημιουργία του καταλόγου.
+ * @author Matskidis Ioannis
+ * @author Moutafidis Dimitrios
  */
 public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private String URL;
@@ -28,7 +30,7 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     private String[] exc = {".", ",", ";", "'", ":", "@", "[", "]", "{", "}", "|", "-", "+", "?", "=", "!", "<<", ">>", "&"};
 
     /**
-     * CONSTRUCTOR ΠΟΥ ΔΕΧΕΤΑΙ ΤΟ URL ΚΑΙ ΤΟ ΑΝΑΘΕΤΕΙ ΣΤΟ STRING URL.
+     * Constructor που δέχεται το Url και το αναθέτει στο String Url.
      * @param url URL.
      */
     MultithreadingForWebText(String url) {
@@ -36,9 +38,9 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     }
 
     /**
-     * ΜΕΘΟΔΟΣ Η ΟΠΟΙΑ ΣΥΝΔΕΕΤΑΙ ΣΤΟ URL ΚΑΙ ΠΑΙΡΝΕΙ ΤΟ ΚΕΙΜΕΝΟ.
-     * ΣΤΗ ΣΥΝΕΧΕΙΑ ΚΑΝΕΙ
-     * @return
+     * Μέθοδος η οποία συνδέεται στο Url παίρνει το κείμενο το καθαρίζει απο τα στοιχεία
+     * που περιέχει ο πίνακας exc και στη συνέχεια βάζει την "καθαρή" λέξη στη συλλογή.
+     * @return Επιστρέφει τη συλλογή με τα στοιχεία (T,D,F).
      */
     @Override
     public HashSet<TFD> call() {
@@ -74,11 +76,14 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     }
 
     /**
-     *
-     * @param x
-     * @param url
-     * @param h
-     * @return
+     * Η μέθοδος αυτή ελέγχει εάν υπάρχει μέσα στο σύνολο των δεδομένων η
+     * λέξη χ και αντίστοιχα επιστρέφει true or false. Επίσης σε περίπτωση που βρεθεί
+     * η λέξη μέσα στο σύνολο τότε αυξάνει τη συχνότητα εμφάνισής της κατα 1.
+     * @param x Η λέξη που θέλουμε να βρούμε εάν υπάρχει.
+     * @param url Url της λέξης χ για τον έλεγχο γιατί σε περίπτωση που υπάρχει ήδη η
+     *            λέξη αλλά με διαφορετικό url δεν εισάγεται πράγμα μη επιθυμητό.
+     * @param h Το σύνολο των δεδομένων στο οποίο θα ψάξουμε για τη λέξη χ.
+     * @return True or false ανάλογα με το εάν βρέθηκε η λέξη ή όχι.
      */
     private boolean check_if_exist(String x, String url, HashSet<TFD> h) {
         boolean bool = false;
@@ -92,9 +97,10 @@ public class MultithreadingForWebText implements Callable<HashSet<TFD>> {
     }
 
     /**
-     *
-     * @param word
-     * @return
+     * Η μέθοδος αυτή παίρνει μία λέξη και την καθαρίζει από όλα τα σύμβολα
+     * τα οποία περιέχονται στον πίνακα sc και την οποία επιστρέφει.
+     * @param word Η λέξη που θέλουμε να καθαρίσουμε.
+     * @return Η καθαρή λέξη.
      */
     private String cleaner(String word) {
         String text = word;

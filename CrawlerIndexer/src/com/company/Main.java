@@ -9,23 +9,37 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.HashSet;
 
-
+/**
+ * Η κλάση αυτή φροντίζει για την υλοποίηση του Crawler και του Indexer.
+ * @author Matskidis Ioannis
+ * @author Moutafidis Dimitrios
+ */
 public class Main {
 
     private static Boolean keepData = false;
     public static int requests = 0;
 
+    /**
+     * Στη μέθοδο αυτή δημιουργούνται αντικείμενα τύπου Crawler και Indexer
+     * προκειμένου να είναι δυνατή η προσπέλαση μεθόδος απο αυτές τις κλάσεις
+     * για την υλοποίηση των βασικών τμημάτων του υποσυστήματος.
+     * @param args Τα ορίσματα που θα εισάγει ο χρήστης.
+     * @throws Exception Για την cleanHtml.
+     */
     public static void main(String[] args) throws Exception {
             HashSet<String> links;//All links
             Crawler cr = new Crawler();
             cr.crawling(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]), Boolean.parseBoolean(args[3]));
             links = cr.getLinks();
-            System.out.println(links);
             Indexer index = new Indexer();
-            index.clean_html(links);
-
+            index.cleanHtml(links);
     }
 
+    /**
+     * Η μέθοδος αυτή φροντίζει να στείλει τις εγγραφές που δημιουργούνται
+     * στη βάση για να είναι δυνατή η προσπέλασή τους από την ιστοσελίδα.
+     * @param docsHashSet HashSet με το σύνολο των δεδομένων.
+     */
     public static void sendDocuments(HashSet<TFD> docsHashSet) {
 
         final Retrofit retrofit = new Retrofit.Builder()
